@@ -7,7 +7,6 @@ from ui.header import create_header
 from ui.story_tab import create_story_tab
 from ui.joke_tab import create_joke_tab
 from ui.learn_tab import create_learn_tab
-from logic.llm_interface import safe_generate_lesson
 
 # --- Build the Gradio App ---
 with gr.Blocks(theme=kids_theme, title="KidsAI Playground") as demo:
@@ -28,16 +27,9 @@ with gr.Blocks(theme=kids_theme, title="KidsAI Playground") as demo:
             
         # Fun Learning Tab
         with gr.TabItem("🧠 Fun Learning", id="learn_tab"):
-            learn_btn, learn_inputs, learn_outputs = create_learn_tab()
+            create_learn_tab()  # Now self-contained
 
-    # 3. Connect the backend logic to the UI (only for learn tab)
-    # Note: Story and Joke tabs are now self-contained
-    
-    learn_btn.click(
-        fn=safe_generate_lesson,
-        inputs=learn_inputs,
-        outputs=learn_outputs
-    )
+    # Note: All tabs are now self-contained with guided interfaces
 
 # --- Launch the App ---
 if __name__ == "__main__":
