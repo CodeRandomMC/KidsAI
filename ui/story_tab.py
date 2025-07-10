@@ -5,17 +5,11 @@ from logic.llm_interface import STORY_HEROES, STORY_ITEMS, STORY_SETTINGS, safe_
 def create_story_tab():
     """Creates the UI for the Story Generator tab with guided step-by-step interface."""
     
-    # Main header (hideable during generation)
-    main_header = gr.Markdown("## 🎨 Let's build a story together!", visible=True)
-    
     # State variables to track selections and current step
     selected_hero = gr.State("")
     selected_item = gr.State("")
     selected_setting = gr.State("")
     current_step = gr.State(1)  # 1=hero, 2=item, 3=setting, 4=ready
-    
-    # Step indicator
-    step_indicator = gr.Markdown("### Step 1 of 3: Choose Your Hero! 🦸‍♀️🦸‍♂️")
     
     # Hero selection (initially visible)
     hero_section = gr.Column(visible=True)
@@ -50,7 +44,6 @@ def create_story_tab():
     # Summary and create button (initially hidden)
     summary_section = gr.Column(visible=False)
     with summary_section:
-        gr.Markdown("**🎉 Perfect! Here's your story setup:**")
         selection_summary = gr.Markdown("")
         create_btn = gr.Button("✨ Create My Amazing Story!", variant="primary", size="lg")
     
@@ -87,7 +80,6 @@ def create_story_tab():
         return (
             hero_choice,  # selected_hero
             2,  # current_step (move to item selection)
-            "### Step 2 of 3: Pick Your Magical Item! ✨",  # step_indicator
             gr.Column(visible=False),  # hero_section
             gr.Column(visible=True),   # item_section
             gr.Column(visible=False),  # setting_section
@@ -99,7 +91,6 @@ def create_story_tab():
         return (
             item_choice,  # selected_item
             3,  # current_step (move to setting selection)
-            "### Step 3 of 3: Choose Your Adventure World! 🌍",  # step_indicator
             gr.Column(visible=False),  # hero_section
             gr.Column(visible=False),  # item_section
             gr.Column(visible=True),   # setting_section
@@ -116,7 +107,6 @@ def create_story_tab():
         return (
             setting_choice,  # selected_setting
             4,  # current_step (ready to create)
-            "### 🎉 Ready to Create Your Story!",  # step_indicator
             gr.Column(visible=False),  # hero_section
             gr.Column(visible=False),  # item_section
             gr.Column(visible=False),  # setting_section
@@ -126,10 +116,8 @@ def create_story_tab():
     
     def generate_story(hero, item, setting):
         """Generate the story and show loading/result"""
-        # Hide main header, step indicator, summary section and show loading
+        # Hide summary section and show loading
         yield (
-            gr.Markdown(visible=False),  # main_header
-            gr.Markdown(visible=False),  # step_indicator
             gr.Column(visible=False),    # summary_section
             gr.HTML(visible=True),       # loading
             gr.Textbox(visible=False),   # story
@@ -144,8 +132,6 @@ def create_story_tab():
         # Show result with AI affirmation and optional image
         show_image = image_path is not None
         yield (
-            gr.Markdown(visible=False),  # main_header (keep hidden)
-            gr.Markdown(visible=False),  # step_indicator (keep hidden)
             gr.Column(visible=False),    # summary_section (keep hidden)
             gr.HTML(visible=False),      # loading
             gr.Textbox(value=story_text, visible=True),  # story
@@ -161,8 +147,6 @@ def create_story_tab():
             "",  # selected_item
             "",  # selected_setting
             1,   # current_step
-            gr.Markdown("## 🎨 Let's build a story together!", visible=True),  # main_header (show again)
-            "### Step 1 of 3: Choose Your Hero! 🦸‍♀️🦸‍♂️",  # step_indicator
             gr.Column(visible=True),   # hero_section
             gr.Column(visible=False),  # item_section
             gr.Column(visible=False),  # setting_section
@@ -180,7 +164,7 @@ def create_story_tab():
     for i, btn in enumerate(hero_buttons):
         btn.click(
             fn=lambda i=i: select_hero(STORY_HEROES[i]),
-            outputs=[selected_hero, current_step, step_indicator, 
+            outputs=[selected_hero, current_step, 
                     hero_section, item_section, setting_section, summary_section]
         )
     
@@ -189,7 +173,7 @@ def create_story_tab():
         btn.click(
             fn=lambda hero, step, i=i: select_item(STORY_ITEMS[i], hero, step),
             inputs=[selected_hero, current_step],
-            outputs=[selected_item, current_step, step_indicator,
+            outputs=[selected_item, current_step,
                     hero_section, item_section, setting_section, summary_section]
         )
     
@@ -198,7 +182,7 @@ def create_story_tab():
         btn.click(
             fn=lambda hero, item, i=i: select_setting(STORY_SETTINGS[i], hero, item),
             inputs=[selected_hero, selected_item],
-            outputs=[selected_setting, current_step, step_indicator,
+            outputs=[selected_setting, current_step,
                     hero_section, item_section, setting_section, summary_section, selection_summary]
         )
     
@@ -206,13 +190,13 @@ def create_story_tab():
     create_btn.click(
         fn=generate_story,
         inputs=[selected_hero, selected_item, selected_setting],
-        outputs=[main_header, step_indicator, summary_section, loading_html, story_output, ai_affirmation, story_image, new_story_btn]
+        outputs=[summary_section, loading_html, story_output, ai_affirmation, story_image, new_story_btn]
     )
     
     # Connect new story button
     new_story_btn.click(
         fn=reset_story,
-        outputs=[selected_hero, selected_item, selected_setting, current_step, main_header, step_indicator,
+        outputs=[selected_hero, selected_item, selected_setting, current_step,
                 hero_section, item_section, setting_section, summary_section, 
                 selection_summary, story_output, ai_affirmation, story_image, new_story_btn]
     )

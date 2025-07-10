@@ -3,20 +3,13 @@ import gradio as gr
 from logic.llm_interface import LEARN_SUBJECTS, LEARN_THEMES, safe_generate_lesson
 
 def create_learn_tab():
-    """Creates the UI for the Fun Learning tab with guided step-by-step interface."""
-    
-    # Main header (hideable during generation)
-    main_header = gr.Markdown("## 🧠 Fun Learning Adventures", visible=True)
-    # sub_header removed for consistency with story style
+    """Create the UI for the Fun Learning tab with guided step-by-step interface."""
     
     # State variables to track selections and current step
     selected_subject = gr.State("")
     selected_theme = gr.State("")
     selected_age = gr.State(6)
     current_step = gr.State(1)  # 1=subject, 2=theme, 3=age, 4=ready
-    
-    # Step indicator
-    step_indicator = gr.Markdown("### Step 1 of 3: What do you want to explore? 🔍")
     
     # Subject selection (initially visible)
     subject_section = gr.Column(visible=True)
@@ -89,11 +82,10 @@ def create_learn_tab():
         return (
             subject_choice,  # selected_subject
             2,  # current_step (move to theme selection)
-            "### Step 2 of 3: Pick Your Adventure Theme! 🎭",  # step_indicator
-            gr.Column(visible=False),  # subject_section
-            gr.Column(visible=True),   # theme_section
-            gr.Column(visible=False),  # age_section
-            gr.Column(visible=False)   # summary_section
+            gr.update(visible=False),  # subject_section
+            gr.update(visible=True),   # theme_section
+            gr.update(visible=False),  # age_section
+            gr.update(visible=False)   # summary_section
         )
     
     def select_theme(theme_choice, subject):
@@ -101,11 +93,10 @@ def create_learn_tab():
         return (
             theme_choice,  # selected_theme
             3,  # current_step (move to age selection)
-            "### Step 3 of 3: Tell us your age! 🎂",  # step_indicator
-            gr.Column(visible=False),  # subject_section
-            gr.Column(visible=False),  # theme_section
-            gr.Column(visible=True),   # age_section
-            gr.Column(visible=False)   # summary_section
+            gr.update(visible=False),  # subject_section
+            gr.update(visible=False),  # theme_section
+            gr.update(visible=True),   # age_section
+            gr.update(visible=False)   # summary_section
         )
     
     def select_age(age_choice, subject, theme):
@@ -120,26 +111,22 @@ def create_learn_tab():
         return (
             age_choice,  # selected_age
             4,  # current_step (ready to create)
-            "### 🎉 Ready for Your Learning Adventure!",  # step_indicator
-            gr.Column(visible=False),  # subject_section
-            gr.Column(visible=False),  # theme_section
-            gr.Column(visible=False),  # age_section
-            gr.Column(visible=True),   # summary_section
+            gr.update(visible=False),  # subject_section
+            gr.update(visible=False),  # theme_section
+            gr.update(visible=False),  # age_section
+            gr.update(visible=True),   # summary_section
             summary_text  # selection_summary
         )
     
     def generate_lesson(subject, theme, age):
         """Generate the lesson and show loading/result"""
-        # Hide headers, step indicator, summary section and show loading
+        # Hide summary section and show loading
         yield (
-            gr.Markdown(visible=False),  # main_header
-            None,  # sub_header removed
-            gr.Markdown(visible=False),  # step_indicator
-            gr.Column(visible=False),    # summary_section
-            gr.HTML(visible=True),       # loading
-            gr.Textbox(visible=False),   # lesson
-            gr.Column(visible=False),    # ai_learning
-            gr.Button(visible=False)     # new lesson button
+            gr.update(visible=False),    # summary_section
+            gr.update(visible=True),     # loading
+            gr.update(visible=False),    # lesson
+            gr.update(visible=False),    # ai_learning
+            gr.update(visible=False)     # new lesson button
         )
         
         # Generate lesson
@@ -147,14 +134,11 @@ def create_learn_tab():
         
         # Show result with AI learning celebration
         yield (
-            gr.Markdown(visible=False),  # main_header (keep hidden)
-            None,  # sub_header removed
-            gr.Markdown(visible=False),  # step_indicator (keep hidden)
-            gr.Column(visible=False),    # summary_section (keep hidden)
-            gr.HTML(visible=False),      # loading
-            gr.Textbox(value=lesson_text, visible=True),  # lesson
-            gr.Column(visible=True),     # ai_learning
-            gr.Button(visible=True)      # new lesson button
+            gr.update(visible=False),    # summary_section (keep hidden)
+            gr.update(visible=False),    # loading
+            gr.update(value=lesson_text, visible=True),  # lesson
+            gr.update(visible=True),     # ai_learning
+            gr.update(visible=True)      # new lesson button
         )
     
     def reset_lesson():
@@ -164,24 +148,21 @@ def create_learn_tab():
             "",  # selected_theme
             6,   # selected_age (reset to default)
             1,   # current_step
-            gr.Markdown("## 🧠 Fun Learning Adventures", visible=True),  # main_header (show again)
-            None,  # sub_header removed
-            "### Step 1 of 3: What do you want to explore? 🔍",  # step_indicator
-            gr.Column(visible=True),   # subject_section
-            gr.Column(visible=False),  # theme_section
-            gr.Column(visible=False),  # age_section
-            gr.Column(visible=False),  # summary_section
+            gr.update(visible=True),   # subject_section
+            gr.update(visible=False),  # theme_section
+            gr.update(visible=False),  # age_section
+            gr.update(visible=False),  # summary_section
             "",  # selection_summary
-            gr.Textbox(visible=False, value=""),  # lesson_output
-            gr.Column(visible=False),  # ai_learning
-            gr.Button(visible=False)   # new_lesson_btn
+            gr.update(visible=False, value=""),  # lesson_output
+            gr.update(visible=False),  # ai_learning
+            gr.update(visible=False)   # new_lesson_btn
         )
     
     # Connect subject buttons
     for i, btn in enumerate(subject_buttons):
         btn.click(
             fn=lambda i=i: select_subject(LEARN_SUBJECTS[i]),
-            outputs=[selected_subject, current_step, step_indicator, 
+            outputs=[selected_subject, current_step, 
                     subject_section, theme_section, age_section, summary_section]
         )
     
@@ -190,7 +171,7 @@ def create_learn_tab():
         btn.click(
             fn=lambda subject, i=i: select_theme(LEARN_THEMES[i], subject),
             inputs=[selected_subject],
-            outputs=[selected_theme, current_step, step_indicator,
+            outputs=[selected_theme, current_step,
                     subject_section, theme_section, age_section, summary_section]
         )
     
@@ -200,7 +181,7 @@ def create_learn_tab():
         btn.click(
             fn=lambda subject, theme, i=i: select_age(ages[i], subject, theme),
             inputs=[selected_subject, selected_theme],
-            outputs=[selected_age, current_step, step_indicator,
+            outputs=[selected_age, current_step,
                     subject_section, theme_section, age_section, summary_section, selection_summary]
         )
     
@@ -208,13 +189,13 @@ def create_learn_tab():
     create_btn.click(
         fn=generate_lesson,
         inputs=[selected_subject, selected_theme, selected_age],
-        outputs=[main_header, step_indicator, summary_section, loading_html, lesson_output, ai_learning, new_lesson_btn]
+        outputs=[summary_section, loading_html, lesson_output, ai_learning, new_lesson_btn]
     )
     
     # Connect new lesson button
     new_lesson_btn.click(
         fn=reset_lesson,
-        outputs=[selected_subject, selected_theme, selected_age, current_step, main_header, step_indicator,
+        outputs=[selected_subject, selected_theme, selected_age, current_step,
                 subject_section, theme_section, age_section, summary_section, 
                 selection_summary, lesson_output, ai_learning, new_lesson_btn]
     )

@@ -5,17 +5,10 @@ from logic.llm_interface import JOKE_SUBJECTS_1, JOKE_SUBJECTS_2, safe_generate_
 def create_joke_tab():
     """Creates the UI for the Joke Factory tab with guided step-by-step interface."""
     
-    # Main header (hideable during generation)
-    main_header = gr.Markdown("## 😂 Joke Factory", visible=True)
-    # sub_header removed for consistency with story style
-    
     # State variables to track selections and current step
     selected_subject1 = gr.State("")
     selected_subject2 = gr.State("")
     current_step = gr.State(1)  # 1=first subject, 2=second subject, 3=ready
-    
-    # Step indicator
-    step_indicator = gr.Markdown("### Step 1 of 2: Pick the First Thing! 🎯")
     
     # First subject selection (initially visible)
     subject1_section = gr.Column(visible=True)
@@ -77,7 +70,6 @@ def create_joke_tab():
         return (
             subject_choice,  # selected_subject1
             2,  # current_step (move to second subject)
-            "### Step 2 of 2: Pick the Second Thing! 🎲",  # step_indicator
             gr.Column(visible=False),  # subject1_section
             gr.Column(visible=True),   # subject2_section
             gr.Column(visible=False)   # summary_section
@@ -94,7 +86,6 @@ def create_joke_tab():
         return (
             subject_choice,  # selected_subject2
             3,  # current_step (ready to create)
-            "### 🎉 Ready to Create Your Joke!",  # step_indicator
             gr.Column(visible=False),  # subject1_section
             gr.Column(visible=False),  # subject2_section
             gr.Column(visible=True),   # summary_section
@@ -103,11 +94,8 @@ def create_joke_tab():
     
     def generate_joke(subject1, subject2):
         """Generate the joke and show loading/result"""
-        # Hide headers, step indicator, summary section and show loading
+        # Hide summary section and show loading
         yield (
-            gr.Markdown(visible=False),  # main_header
-            None,  # sub_header removed
-            gr.Markdown(visible=False),  # step_indicator
             gr.Column(visible=False),    # summary_section
             gr.HTML(visible=True),       # loading
             gr.Textbox(visible=False),   # joke
@@ -120,9 +108,6 @@ def create_joke_tab():
         
         # Show result with AI celebration
         yield (
-            gr.Markdown(visible=False),  # main_header (keep hidden)
-            None,  # sub_header removed
-            gr.Markdown(visible=False),  # step_indicator (keep hidden)
             gr.Column(visible=False),    # summary_section (keep hidden)
             gr.HTML(visible=False),      # loading
             gr.Textbox(value=joke_text, visible=True),  # joke
@@ -136,9 +121,6 @@ def create_joke_tab():
             "",  # selected_subject1
             "",  # selected_subject2
             1,   # current_step
-            gr.Markdown("## 😂 Joke Factory", visible=True),  # main_header (show again)
-            None,  # sub_header removed
-            "### Step 1 of 2: Pick the First Thing! 🎯",  # step_indicator
             gr.Column(visible=True),   # subject1_section
             gr.Column(visible=False),  # subject2_section
             gr.Column(visible=False),  # summary_section
@@ -152,7 +134,7 @@ def create_joke_tab():
     for i, btn in enumerate(subject1_buttons):
         btn.click(
             fn=lambda i=i: select_subject1(JOKE_SUBJECTS_1[i]),
-            outputs=[selected_subject1, current_step, step_indicator, 
+            outputs=[selected_subject1, current_step, 
                     subject1_section, subject2_section, summary_section]
         )
     
@@ -161,7 +143,7 @@ def create_joke_tab():
         btn.click(
             fn=lambda subject1, i=i: select_subject2(JOKE_SUBJECTS_2[i], subject1),
             inputs=[selected_subject1],
-            outputs=[selected_subject2, current_step, step_indicator,
+            outputs=[selected_subject2, current_step,
                     subject1_section, subject2_section, summary_section, selection_summary]
         )
     
@@ -169,13 +151,13 @@ def create_joke_tab():
     create_btn.click(
         fn=generate_joke,
         inputs=[selected_subject1, selected_subject2],
-        outputs=[main_header, step_indicator, summary_section, loading_html, joke_output, ai_celebration, new_joke_btn]
+        outputs=[summary_section, loading_html, joke_output, ai_celebration, new_joke_btn]
     )
     
     # Connect new joke button
     new_joke_btn.click(
         fn=reset_joke,
-        outputs=[selected_subject1, selected_subject2, current_step, main_header, step_indicator,
+        outputs=[selected_subject1, selected_subject2, current_step,
                 subject1_section, subject2_section, summary_section, 
                 selection_summary, joke_output, ai_celebration, new_joke_btn]
     )
