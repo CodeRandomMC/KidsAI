@@ -6,8 +6,8 @@ def create_learn_tab():
     """Creates the UI for the Fun Learning tab with guided step-by-step interface."""
     
     # Main header (hideable during generation)
-    main_header = gr.Markdown("## 🧠 Let's make learning an adventure!", visible=True)
-    sub_header = gr.Markdown("### We'll turn any topic into a fun story! 🎯", visible=True)
+    main_header = gr.Markdown("## 🧠 Fun Learning Adventures", visible=True)
+    # sub_header removed for consistency with story style
     
     # State variables to track selections and current step
     selected_subject = gr.State("")
@@ -133,7 +133,7 @@ def create_learn_tab():
         # Hide headers, step indicator, summary section and show loading
         yield (
             gr.Markdown(visible=False),  # main_header
-            gr.Markdown(visible=False),  # sub_header
+            None,  # sub_header removed
             gr.Markdown(visible=False),  # step_indicator
             gr.Column(visible=False),    # summary_section
             gr.HTML(visible=True),       # loading
@@ -148,7 +148,7 @@ def create_learn_tab():
         # Show result with AI learning celebration
         yield (
             gr.Markdown(visible=False),  # main_header (keep hidden)
-            gr.Markdown(visible=False),  # sub_header (keep hidden)
+            None,  # sub_header removed
             gr.Markdown(visible=False),  # step_indicator (keep hidden)
             gr.Column(visible=False),    # summary_section (keep hidden)
             gr.HTML(visible=False),      # loading
@@ -164,8 +164,8 @@ def create_learn_tab():
             "",  # selected_theme
             6,   # selected_age (reset to default)
             1,   # current_step
-            gr.Markdown("## 🧠 Let's make learning an adventure!", visible=True),  # main_header (show again)
-            gr.Markdown("### We'll turn any topic into a fun story! 🎯", visible=True),  # sub_header (show again)
+            gr.Markdown("## 🧠 Fun Learning Adventures", visible=True),  # main_header (show again)
+            None,  # sub_header removed
             "### Step 1 of 3: What do you want to explore? 🔍",  # step_indicator
             gr.Column(visible=True),   # subject_section
             gr.Column(visible=False),  # theme_section
@@ -208,13 +208,13 @@ def create_learn_tab():
     create_btn.click(
         fn=generate_lesson,
         inputs=[selected_subject, selected_theme, selected_age],
-        outputs=[main_header, sub_header, step_indicator, summary_section, loading_html, lesson_output, ai_learning, new_lesson_btn]
+        outputs=[main_header, step_indicator, summary_section, loading_html, lesson_output, ai_learning, new_lesson_btn]
     )
     
     # Connect new lesson button
     new_lesson_btn.click(
         fn=reset_lesson,
-        outputs=[selected_subject, selected_theme, selected_age, current_step, main_header, sub_header, step_indicator,
+        outputs=[selected_subject, selected_theme, selected_age, current_step, main_header, step_indicator,
                 subject_section, theme_section, age_section, summary_section, 
                 selection_summary, lesson_output, ai_learning, new_lesson_btn]
     )

@@ -129,13 +129,15 @@ graph TD
 ## 📸 Project Showcase
 
 <div align="center">
-<img src="path_to_home_screenshot.png" alt="KidsAI Home Screen" width="600"/>
+<img src="images/welcome_screen.png" alt="KidsAI Home Screen" width="600"/>
 <p><i>The welcoming home screen of KidsAI</i></p>
 </div>
 
 <div align="center">
-<img src="path_to_story_screenshot.png" alt="Story Generator" width="600"/>
-<p><i>Children creating their own stories with guided choices</i></p>
+<img src="images/story_generator.png" alt="Story Generator" width="280"/>
+<img src="images/joke_factory.png" alt="Joke Factory" width="280"/>
+<img src="images/learning_module.png" alt="Learning Module" width="280"/>
+<p><i>KidsAI's three main features: Story Generator, Joke Factory, and Learning Modules</i></p>
 </div>
 
 ## 🎯 Future Vision: The "Life Co-pilot"
@@ -169,7 +171,7 @@ Follow these instructions to get a local copy up and running.
 1.  **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/kidsai.git
+    git clone https://github.com/CodeRandomMC/KidsAI.git
     cd kidsai
     ```
 

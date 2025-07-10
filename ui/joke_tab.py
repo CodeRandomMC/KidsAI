@@ -6,8 +6,8 @@ def create_joke_tab():
     """Creates the UI for the Joke Factory tab with guided step-by-step interface."""
     
     # Main header (hideable during generation)
-    main_header = gr.Markdown("## 😂 Welcome to the Joke Factory!", visible=True)
-    sub_header = gr.Markdown("### Let's make a super silly joke together! 🤪", visible=True)
+    main_header = gr.Markdown("## 😂 Joke Factory", visible=True)
+    # sub_header removed for consistency with story style
     
     # State variables to track selections and current step
     selected_subject1 = gr.State("")
@@ -106,7 +106,7 @@ def create_joke_tab():
         # Hide headers, step indicator, summary section and show loading
         yield (
             gr.Markdown(visible=False),  # main_header
-            gr.Markdown(visible=False),  # sub_header
+            None,  # sub_header removed
             gr.Markdown(visible=False),  # step_indicator
             gr.Column(visible=False),    # summary_section
             gr.HTML(visible=True),       # loading
@@ -121,7 +121,7 @@ def create_joke_tab():
         # Show result with AI celebration
         yield (
             gr.Markdown(visible=False),  # main_header (keep hidden)
-            gr.Markdown(visible=False),  # sub_header (keep hidden)
+            None,  # sub_header removed
             gr.Markdown(visible=False),  # step_indicator (keep hidden)
             gr.Column(visible=False),    # summary_section (keep hidden)
             gr.HTML(visible=False),      # loading
@@ -136,8 +136,8 @@ def create_joke_tab():
             "",  # selected_subject1
             "",  # selected_subject2
             1,   # current_step
-            gr.Markdown("## 😂 Welcome to the Joke Factory!", visible=True),  # main_header (show again)
-            gr.Markdown("### Let's make a super silly joke together! 🤪", visible=True),  # sub_header (show again)
+            gr.Markdown("## 😂 Joke Factory", visible=True),  # main_header (show again)
+            None,  # sub_header removed
             "### Step 1 of 2: Pick the First Thing! 🎯",  # step_indicator
             gr.Column(visible=True),   # subject1_section
             gr.Column(visible=False),  # subject2_section
@@ -169,13 +169,13 @@ def create_joke_tab():
     create_btn.click(
         fn=generate_joke,
         inputs=[selected_subject1, selected_subject2],
-        outputs=[main_header, sub_header, step_indicator, summary_section, loading_html, joke_output, ai_celebration, new_joke_btn]
+        outputs=[main_header, step_indicator, summary_section, loading_html, joke_output, ai_celebration, new_joke_btn]
     )
     
     # Connect new joke button
     new_joke_btn.click(
         fn=reset_joke,
-        outputs=[selected_subject1, selected_subject2, current_step, main_header, sub_header, step_indicator,
+        outputs=[selected_subject1, selected_subject2, current_step, main_header, step_indicator,
                 subject1_section, subject2_section, summary_section, 
                 selection_summary, joke_output, ai_celebration, new_joke_btn]
     )
