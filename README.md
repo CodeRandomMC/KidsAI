@@ -134,10 +134,8 @@ graph TD
 </div>
 
 <div align="center">
-<img src="images/story_generator.png" alt="Story Generator" width="280"/>
-<img src="images/joke_factory.png" alt="Joke Factory" width="280"/>
-<img src="images/learning_module.png" alt="Learning Module" width="280"/>
-<p><i>KidsAI's three main features: Story Generator, Joke Factory, and Learning Modules</i></p>
+<img src="images/the_mission.png" alt="KidsAI Home Screen" width="600"/>
+<p><i>The mission and why</i></p>
 </div>
 
 ## 🎯 Future Vision: The "Life Co-pilot"
