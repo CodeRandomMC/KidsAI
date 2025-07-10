@@ -61,6 +61,43 @@ with gr.Blocks() as demo:
             - Make it YOUR story!
             """)
     
+    # Parent/Guardian call to action
+    gr.Markdown("---")
+    
+    with gr.Row():
+        with gr.Column(scale=2):
+            gr.Markdown("""
+            ## 👨‍👩‍👧‍👦 A Message for Parents & Guardians
+            
+            **Your child isn't just "using AI"—they're learning to be creative directors of cutting-edge technology.**
+            
+            When children interact with KidsAI, they make every creative decision. They choose the hero, the magical item, the setting. AI simply helps bring *their* vision to life—like a sophisticated paintbrush responding to an artist's guidance.
+            
+            **This is about empowerment, not replacement.** Your child is developing confidence with technology that will be fundamental to their future, while building creative problem-solving skills that will serve them for life.
+            
+            **💡 Best experienced together!** Children learn better and are more engaged when exploring new technology with trusted adults. You might discover your own creativity sparked by their unique imagination!
+            """)
+        
+        with gr.Column(scale=1):
+            gr.HTML("""
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        padding: 25px; border-radius: 15px; text-align: center; color: white; 
+                        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);">
+                <h3 style="margin-top: 0; color: white;">🌟 Learn More About Our Mission</h3>
+                <p style="font-size: 16px; line-height: 1.5; margin: 15px 0;">
+                    Discover why KidsAI is designed as a creative partnership tool, 
+                    plus tips for the best parent-child experience.
+                </p>
+                <a href="/parents" style="display: inline-block; background: white; color: #667eea; 
+                   padding: 12px 24px; border-radius: 25px; text-decoration: none; 
+                   font-weight: bold; margin-top: 10px; transition: transform 0.2s;"
+                   onmouseover="this.style.transform='scale(1.05)'" 
+                   onmouseout="this.style.transform='scale(1)'">
+                    👨‍👩‍👧‍👦 For Parents & Guardians
+                </a>
+            </div>
+            """)
+    
     # Getting started
     gr.Markdown("---")
     gr.Markdown("## 🚀 Ready to start your adventure?")
