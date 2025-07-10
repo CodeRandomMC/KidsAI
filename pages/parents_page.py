@@ -1,3 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Copyright (c) 2025 Jack Pollard
+
 # pages/parents_page.py
 import gradio as gr
 
@@ -1037,8 +1043,8 @@ with gr.Blocks() as demo:
                 <div class="tip-card">
                     <div class="tip-number">5</div>
                     <div class="tip-content">
-                        <h4>Save or share</h4>
-                        <p>Consider printing favorite stories or sharing them with family</p>
+                        <h4>Privacy & Security</h4>
+                        <p>Rest assured - nothing is saved or stored. Each session is completely private and stateless.</p>
                     </div>
                 </div>
             </div>

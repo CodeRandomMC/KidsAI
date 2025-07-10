@@ -1,3 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Copyright (c) 2025 Jack Pollard
+
 # ui/joke_tab.py
 import gradio as gr
 from logic.llm_interface import JOKE_SUBJECTS_1, JOKE_SUBJECTS_2, safe_generate_joke
@@ -104,8 +110,7 @@ def create_joke_tab():
         label="🎭 Your Hilarious Joke", 
         interactive=False, 
         lines=6, 
-        visible=False,
-        show_copy_button=True
+        visible=False
     )
     
     # Joke rating section (initially hidden)
@@ -133,12 +138,10 @@ def create_joke_tab():
         gr.Markdown("### 🤖🎉 **You just created this joke with Artificial Intelligence!**")
         gr.Markdown("You picked the ingredients, and AI mixed them into something funny! 😄")
         
-        # Share joke section
+        # Make another joke section
         with gr.Row():
             with gr.Column():
-                share_joke_btn = gr.Button("📤 Save This Joke", variant="secondary")
-            with gr.Column():
-                another_joke_btn = gr.Button("🎪 Make Another Joke!", variant="secondary")
+                another_joke_btn = gr.Button("🎪 Make Another Joke!", variant="primary", size="lg")
         
         # Fun facts about AI and humor
         with gr.Accordion("🤔 How does AI make jokes?", open=False):
@@ -286,10 +289,6 @@ def create_joke_tab():
         """Handle joke audio playback - placeholder for now"""
         return gr.update(value="🔊 Audio feature coming soon! For now, try reading the joke out loud with funny voices!")
     
-    def handle_joke_share():
-        """Handle joke sharing"""
-        return gr.update(value="Joke saved! You can copy the text above to share with friends and family.")
-    
     # Event Listeners
     
     # Connect first subject buttons
@@ -328,12 +327,6 @@ def create_joke_tab():
     # Connect audio button
     joke_audio_button.click(
         fn=handle_joke_audio,
-        outputs=[joke_output]
-    )
-    
-    # Connect share button
-    share_joke_btn.click(
-        fn=handle_joke_share,
         outputs=[joke_output]
     )
     

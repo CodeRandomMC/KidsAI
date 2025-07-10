@@ -1,3 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Copyright (c) 2025 Jack Pollard
+
 # pages/home_page.py
 import gradio as gr
 import os
@@ -669,7 +675,7 @@ with gr.Blocks() as demo:
                 <div class="tip-icon">🗣️</div>
                 <div class="tip-content">
                     <h4>Read creations out loud</h4>
-                    <p>Stories and jokes are even better when shared with others!</p>
+                    <p>Stories and jokes are even better when read aloud together!</p>
                 </div>
             </div>
             
@@ -742,11 +748,11 @@ with gr.Blocks() as demo:
     with gr.Accordion("💾 Your Previous Creations", open=False):
         gr.HTML("""
         <div class="session-notice">
-            <div class="notice-icon">💾</div>
+            <div class="notice-icon">�</div>
             <div class="notice-text">
-                <h4>Save Your Creations</h4>
-                <p>Your stories, jokes, and learning adventures will be saved here for you to enjoy again later.</p>
-                <p>Coming soon: Save and share your favorite creations!</p>
+                <h4>Privacy First</h4>
+                <p>Your creations stay private! We don't save anything you make - it's just for you to enjoy right now.</p>
+                <p>This keeps your imagination safe and secure! 🛡️</p>
             </div>
         </div>
         

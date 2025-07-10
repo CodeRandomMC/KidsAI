@@ -1,3 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Copyright (c) 2025 Jack Pollard
+
 # ui/learn_tab.py
 import gradio as gr
 from logic.llm_interface import LEARN_SUBJECTS, LEARN_THEMES, safe_generate_lesson
@@ -116,8 +122,7 @@ def create_learn_tab():
         label="📚 Your Personal Learning Adventure", 
         interactive=False, 
         lines=12, 
-        visible=False,
-        show_copy_button=True
+        visible=False
     )
     
     # Audio controls (initially hidden)

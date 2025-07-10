@@ -2,8 +2,8 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Framework](https://img.shields.io/badge/Framework-Gradio-orange)](https://www.gradio.app/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Safety by Design](https://img.shields.io/badge/Architecture-Safety%20by%20Design-brightgreen)](https://github.com/your-username/kidsai#project-case-study-the-kidsai-safety-architecture)
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+[![Safety by Design](https://img.shields.io/badge/Architecture-Safety%20by%20Design-brightgreen)](https://github.com/CodeRandomMC/kidsai#project-case-study-the-kidsai-safety-architecture)
 
 "This project is currently a high-fidelity interactive prototype, demonstrating the complete user experience and safety-first design philosophy. The full architectural plan, including the two-stage 'Guardian' API pipeline, is detailed here and is ready for full implementation. And will be implemented soon"
 

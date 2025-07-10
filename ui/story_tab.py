@@ -1,3 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+# Copyright (c) 2025 Jack Pollard
+
 # ui/story_tab.py
 import gradio as gr
 from logic.llm_interface import STORY_HEROES, STORY_ITEMS, STORY_SETTINGS, safe_generate_story
@@ -134,8 +140,7 @@ def create_story_tab():
         label="📖 Your Amazing Story", 
         interactive=False, 
         lines=12, 
-        visible=False,
-        show_copy_button=True
+        visible=False
     )
     
     # Audio controls for story (initially hidden)
@@ -161,10 +166,6 @@ def create_story_tab():
                 with gr.Row():
                     for emoji in ["😍", "😄", "😊", "😐", "😕"]:
                         rating_btn = gr.Button(emoji, variant="secondary", size="sm")
-            
-            with gr.Column():
-                gr.Markdown("#### **Share with family!**")
-                share_btn = gr.Button("📤 Save Story", variant="secondary")
         
         # Fun facts about storytelling and AI
         with gr.Accordion("🤔 Want to know more about AI storytelling?", open=False):
@@ -336,10 +337,6 @@ def create_story_tab():
         """Handle story rating - placeholder for now"""
         return gr.update(value=f"Thanks for rating our story {rating}! We love your feedback.")
     
-    def handle_story_share():
-        """Handle story sharing - placeholder for now"""
-        return gr.update(value="Story saved! You can copy the text above to share with family and friends.")
-    
     # Event Listeners
     
     # Connect hero buttons
@@ -398,11 +395,5 @@ def create_story_tab():
     # Connect audio button (placeholder functionality)
     story_audio_button.click(
         fn=handle_story_audio,
-        outputs=[story_output]
-    )
-    
-    # Connect share button (placeholder functionality)
-    share_btn.click(
-        fn=handle_story_share,
         outputs=[story_output]
     )
