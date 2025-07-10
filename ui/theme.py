@@ -50,6 +50,31 @@ multipage_css = """
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Style the first tab (KidsAI) as a logo */
+.gradio-tabs .tab-nav button:first-child {
+    background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    border: none;
+    margin-right: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
+
+.gradio-tabs .tab-nav button:first-child:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+}
+
+/* Make the logo tab slightly larger */
+.gradio-tabs .tab-nav button:first-child {
+    padding: 8px 16px;
+    min-width: 120px;
+}
+
 /* Better spacing for content */
 .main-content {
     padding: 2em;
