@@ -51,15 +51,24 @@ def safe_generate_story(hero, item, setting):
 
 def safe_generate_joke(subject1, subject2):
     """
-    Simulates a safe joke generation.
+    Simulates a safe joke generation with variety for kids.
     """
     print(f"[Logic] Generating joke for: ({subject1}, {subject2})")
     time.sleep(1) # Simulate API call
     
-    # A simple, pre-vetted joke template
-    joke = f"What do you get when you cross {subject1} with {subject2}?\n\nA very funny mix-up!"
+    # Multiple joke templates for variety
+    joke_templates = [
+        f"What do you get when you cross {subject1} with {subject2}?\n\nSomething super silly that makes everyone giggle! 😄",
+        f"Why did {subject1} meet {subject2}?\n\nBecause they wanted to have a funny adventure together! 🎉",
+        f"What happens when {subject1} and {subject2} become best friends?\n\nThey create the most amazing giggles in the whole world! 🌟",
+        f"What do you call {subject1} dancing with {subject2}?\n\nThe silliest, most wonderful dance party ever! 💃🕺",
+        f"How do {subject1} and {subject2} tell jokes?\n\nThey tickle each other until everyone starts laughing! 🤣",
+    ]
     
-    # No safety monitor needed for this simple template, but you could add one.
+    # Pick a random template for variety
+    joke = random.choice(joke_templates)
+    
+    # No safety monitor needed for these simple templates, but you could add one.
     return joke
 
 def safe_generate_lesson(subject, theme, age):
