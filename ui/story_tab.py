@@ -174,6 +174,8 @@ def create_story_tab():
             gr.Button(visible=False)   # new_story_btn
         )
     
+    # Event Listeners
+    
     # Connect hero buttons
     for i, btn in enumerate(hero_buttons):
         btn.click(

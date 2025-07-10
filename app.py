@@ -1,35 +1,37 @@
 # app.py
 import gradio as gr
 
-# Import UI modules and logic
-from ui.theme import kids_theme
-from ui.header import create_header
-from ui.story_tab import create_story_tab
-from ui.joke_tab import create_joke_tab
-from ui.learn_tab import create_learn_tab
+# Import page modules
+import pages.home_page as home_page
+import pages.story_page as story_page
+import pages.joke_page as joke_page
+import pages.learn_page as learn_page
 
-# --- Build the Gradio App ---
-with gr.Blocks(theme=kids_theme, title="KidsAI Playground") as demo:
+# Import theme and header
+from ui.theme import kids_theme, multipage_css
+from ui.header import create_header
+
+# --- Build the Multipage Gradio App ---
+with gr.Blocks(theme=kids_theme, title="KidsAI Playground", css=multipage_css) as demo:
     
-    # 1. Create the persistent header
+    # Create the persistent header on the home page
     create_header()
     
-    # 2. Create the main navigation tabs
-    with gr.Tabs():
-        
-        # Story Generator Tab
-        with gr.TabItem("📖 Story Time", id="story_tab"):
-            create_story_tab()  # Now self-contained
+    # Render the home page content
+    home_page.demo.render()
 
-        # Joke Factory Tab
-        with gr.TabItem("😂 Joke Factory", id="joke_tab"):
-            create_joke_tab()  # Now self-contained
-            
-        # Fun Learning Tab
-        with gr.TabItem("🧠 Fun Learning", id="learn_tab"):
-            create_learn_tab()  # Now self-contained
+# Add separate pages using routes
+with demo.route("📖 Story Time", "/story"):
+    create_header()  # Header on each page
+    story_page.demo.render()
 
-    # Note: All tabs are now self-contained with guided interfaces
+with demo.route("😂 Joke Factory", "/jokes"):
+    create_header()  # Header on each page  
+    joke_page.demo.render()
+
+with demo.route("🧠 Fun Learning", "/learn"):
+    create_header()  # Header on each page
+    learn_page.demo.render()
 
 # --- Launch the App ---
 if __name__ == "__main__":
